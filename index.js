@@ -28,15 +28,12 @@ const WebsiteRouter = require('./app/routes/websiteRoute');
 app.use(WebsiteRouter);
 
 // app settings
-app.set('env', config.env);
-app.set('hostname', config.hostname);
-app.set('port', config.port);
-const port = app.get('port');
+
 
 app.on('error', (err) => console.error('app couldn\'t start', err));
 app.listen(config.port, (err) => {
   if(err) console.error('app issue', err);
-  console.log('app is listening on port', port);
+  console.log('app is listening on port', config.port);
 });
 
 // app.use(function(req, res) {
