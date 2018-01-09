@@ -1,11 +1,11 @@
 // main route module
 'use strict';
 
+const
+      WebsiteController = require('../controllers/websiteController'),
+      express = require('express'),
+      router = express.Router();
 
-const express = require('express');
-const router = express.Router();
-
-const websiteController = require('../controllers/websiteController');
 
 router.get('/', (req,res) => {
   console.log('homepage');
@@ -13,10 +13,10 @@ router.get('/', (req,res) => {
 });
 
 
-router.get('/create/:url', websiteController.generate_tiny_url);
+router.get('/create/:url', WebsiteController.generate_tiny_url);
 
 
-router.get('/:tinyUrl', websiteController.get_original_url);
+router.get('/:tiny', WebsiteController.get_original_url);
 
 
 module.exports = router;

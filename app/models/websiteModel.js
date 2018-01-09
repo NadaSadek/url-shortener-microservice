@@ -1,18 +1,25 @@
 'use strict';
 
-let mongoose = require('mongoose');
+const mongoose = require('mongoose');
+mongoose.Promise = Promise;
+
 
 const WebsiteSchema = mongoose.Schema({
   original: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   tiny: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   }
 });
 
-const UrlModel = mongoose.model('Website', WebsiteSchema);
 
-module.exports = UrlModel;
+const WebsiteModel = mongoose.model('Website', WebsiteSchema);
+
+WebsiteModel.getDocument = (query) => WebsiteModel.findOne(query).exec();
+
+module.exports = WebsiteModel;
