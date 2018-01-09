@@ -1,6 +1,7 @@
 'use strict';
 
-let productionConfig = {
+let productionConfig =
+    port: process.ENV.port
     viewDir: './views'
 };
 
