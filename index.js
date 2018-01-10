@@ -2,11 +2,12 @@
 
 'use strict';
 
-const express = require('express');
-const path = require('path');
-const mongoose = require('mongoose');
-const config = require('./config');
-const bodyParser = require('body-parser');
+const
+		express = require('express'),
+ 		path = require('path'),
+		mongoose = require('mongoose'),
+		config = require('./config'),
+		bodyParser = require('body-parser');
 
 
 // Connect to Mongoose
@@ -24,18 +25,13 @@ app.set('view engine', "pug");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const WebsiteRouter = require('./app/routes/websiteRoute');
-app.use(WebsiteRouter);
+const websiteRouter = require('./app/routes/websiteRoute');
+app.use(websiteRouter);
 
 // app settings
-
 
 app.on('error', (err) => console.error('app couldn\'t start', err));
 app.listen(config.port, (err) => {
   if(err) console.error('app issue', err);
   console.log('app is listening on port', config.port);
 });
-
-// app.use(function(req, res) {
-//   res.status(404).send({url: req.originalUrl + ' not found'});
-// });

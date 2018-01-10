@@ -18,8 +18,8 @@ const WebsiteSchema = mongoose.Schema({
 });
 
 
-const WebsiteModel = mongoose.model('Website', WebsiteSchema);
+const websiteModel = mongoose.model('Website', WebsiteSchema);
 
-WebsiteModel.getDocument = (query) => WebsiteModel.findOne(query).exec();
+websiteModel.getDocument = (query) => websiteModel.findOne(query).exec();
 
-module.exports = WebsiteModel;
+module.exports = websiteModel;

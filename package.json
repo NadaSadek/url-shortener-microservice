@@ -32,7 +32,6 @@
     "grunt-cli": "^1.2.0",
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-watch": "^1.0.0",
-    "lodash": "^4.17.4",
     "mongodb": "^3.0.1",
     "mongoose": "^5.0.0-rc2",
     "node": "^9.3.0",
