@@ -5,7 +5,7 @@ module.exports = function jshint(grunt) {
 	return {
 		files: [
             'public/*/*.js',
-						'tests/*.js',
+						'app/*/*.js',
             '*.js'
         ],
         options: {

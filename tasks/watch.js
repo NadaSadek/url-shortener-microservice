@@ -5,9 +5,11 @@ module.exports = function (grunt) {
   return {
       styles: {
           files: [
-              'public/*/**',
+              'public/stylesheets/*.less',
+              'app/*/**',
               'tasks/*.js',
-              '**'
+              'views/**',
+              '*.js'
           ],
           tasks: ['jshint','less']
       }

@@ -1,3 +1,4 @@
+/*jslint node: true */
 'use strict';
 
 const mongoose = require('mongoose'),
@@ -12,28 +13,44 @@ const result = regex.test(url);
 return result;
 };
 
-
-
+exports.open_homepage = (req,res) => res.render('index');
 
 exports.generate_tiny_url = (req, res) => {
 
   const RandomId = Math.floor(Math.random() * (9000 - 1) + 1);
-  console.log(req.params[0]);
-  if(urlValidator(req.params[0])){
-
-    const websiteDocument = {original: req.params[0], tiny: RandomId};
-  	return websiteModel.create(websiteDocument)
-      .then((website) => res.status(200).json(websiteDocument))
+  const postURL = req.body.url;
+  console.log(postURL);
+  if(urlValidator(postURL)){
+    const websiteDocument = new websiteModel({
+      original: postURL,
+      tiny: RandomId
+    });
+  	return websiteDocument.save()
+      .then((website) => {
+        console.log('yyc');
+        res.render('index', {
+          'result': [{original: website.original, tiny: res.hostname+'/'+website.tiny}]
+        });
+      })
       .catch((err) => {
         if(err.code === 11000) {
-          return websiteModel.getDocument({original: req.params[0]})
-            .then((website) => res.json({original: req.params[0], tiny: website.tiny}))
+          return websiteModel.getDocument({original: postURL})
+            .then((website) => {
+              console.log('xxx', website);
+              res.render('index', {
+                'result': [{original: postURL, tiny: res.hostname+'/'+website.tiny}]
+              });
+            })
             .catch((err) => res.status(500).json({error: err}));
         }
         else res.status(500).json({error: err});
       });
   }
-  else res.status(500).json({error: 'invalid url'});
+  else {
+    res.render('index', {
+      'errMessage': 'Please Provide a Valid URL!'
+    });
+  }
 };
 
 exports.get_original_url = (req, res) => {

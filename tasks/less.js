@@ -12,9 +12,9 @@ module.exports = function less(grunt) {
       },
       files: [{
               expand: true,
-              cwd: 'public/style',
+              cwd: 'public/stylesheets/',
               src: ['*.less'],
-              dest: 'public/style/',
+              dest: 'public/stylesheets/',
               ext: '.css'
       }]
     }

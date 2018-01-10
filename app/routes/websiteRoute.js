@@ -1,4 +1,6 @@
-// main route module
+/*jslint node: true */
+
+
 'use strict';
 
 const
@@ -7,10 +9,10 @@ const
       router = express.Router();
 
 
-router.get('/', (req,res) => res.render('index'));
+router.get('/', websiteController.open_homepage);
 
 
-router.get('/create/*', websiteController.generate_tiny_url);
+router.post('/*', websiteController.generate_tiny_url);
 
 
 router.get('/:tiny', websiteController.get_original_url);
