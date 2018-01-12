@@ -28,7 +28,8 @@ exports.generate_tiny_url = (req, res) => {
     console.log('websiteDocument ', websiteDocument);
   	return websiteDocument.save()
       .then(() => {
-        const websiteJson = {original: websiteDocument.original, tiny: res.host+'/'+websiteDocument.tiny};
+        console.log(res.headers);
+        const websiteJson = {original: websiteDocument.original, tiny: res.headers.host+'/'+websiteDocument.tiny};
         console.log('Saved!', websiteDocument);
         console.log('websiteJson', websiteJson);
         res.status(200).json(websiteJson);
@@ -42,7 +43,7 @@ exports.generate_tiny_url = (req, res) => {
             .then((website) => {
               console.log('xxx', website);
               res.render('index', {
-                'result': [{original: postURL, tiny: res.host+'/'+website.tiny}]
+                'result': [{original: postURL, tiny: res.headers.host+'/'+website.tiny}]
               });
             })
             .catch((err) => res.status(500).json({error: err}));
