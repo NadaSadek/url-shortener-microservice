@@ -30,7 +30,7 @@ exports.generate_tiny_url = (req, res) => {
       .then(() => {
         const websiteJson = {original: websiteDocument.original, tiny: res.hostname+'/'+websiteDocument.tiny};
         console.log('Saved!', websiteDocument);
-        console.log()
+        console.log('websiteJson', websiteJson);
         res.status(200).json(websiteJson);
         res.render('index', {
           'result': [websiteJson]
