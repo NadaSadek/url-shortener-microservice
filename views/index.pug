@@ -4,15 +4,14 @@ block body
   link(href='/../stylesheets/style.css', rel='stylesheet')
   if result
     h1 {originalUrl: #{result.original}, tinyUrl: #{result.original}}
-  else
-    if errMessage
-      h1.error-message #{errMessage}
-    else
-      h1 Make me Shorter!
-    form(name="/add", method="post")
-      div.form-group
-        div.input
-          span.label Please Enter a Url
-          input(type="text", class="url-input",name="url")
-          div.actions
-          input(type="submit", class="btn-primary",value="add")    
+  else if errMessage
+    h1.error-message #{errMessage}
+  else 
+    h1 Make me Shorter!
+  form(name="add", method="post")
+    div.form-group
+      div.input
+        span.label Please Enter a Url
+        input(type="text", class="url-input",name="url")
+        div.actions
+        input(type="submit", class="btn-primary",value="add")    

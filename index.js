@@ -9,9 +9,12 @@ const
 		config = require('./config'),
 		bodyParser = require('body-parser');
 
-
 // Connect to Mongoose
-mongoose.connect(config.db);
+mongoose.connect(config.db, (err) => {
+	console.error('Mongoose error', err.stack);
+	process.exit(1);
+});
+
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.on('connected', () => console.log('Mongoose default connection open to ' + config.db));

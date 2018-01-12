@@ -25,14 +25,18 @@ exports.generate_tiny_url = (req, res) => {
       original: postURL,
       tiny: RandomId
     });
+    console.log('websiteDocument ', websiteDocument);
   	return websiteDocument.save()
-      .then((website) => {
-        console.log('yyc');
+      .then(() => {
+        const websiteJson = {original: websiteDocument.original, tiny: res.hostname+'/'+websiteDocument.tiny};
+        console.log('Saved!', websiteDocument);
+        console.log()
+        res.status(200).json(websiteJson);
         res.render('index', {
-          'result': [{original: website.original, tiny: res.hostname+'/'+website.tiny}]
+          'result': [websiteJson]
         });
       })
-      .catch((err) => {
+      .catch(err => {
         if(err.code === 11000) {
           return websiteModel.getDocument({original: postURL})
             .then((website) => {
