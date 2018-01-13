@@ -28,14 +28,14 @@ exports.generate_tiny_url = (req, res) => {
     console.log('websiteDocument ', websiteDocument);
   	return websiteDocument.save()
       .then(() => {
-        console.log('yyy: ',res.connection.socket.headers.origin);
+        console.log('mongoose -> successfully saved')
         const websiteJson = {original: websiteDocument.original, tiny: req.headers.host + '/' + websiteDocument.tiny};
         console.log('Saved!', websiteDocument);
         console.log('websiteJson', websiteJson);
-        res.status(200).json(websiteJson);
-        res.render('index', {
-          'result': [websiteJson]
-        });
+        res.json(websiteJson);
+        // res.render('index', {
+        //   'result': [websiteJson]
+        // });
       })
       .catch(err => {
         if(err.code === 11000) {
@@ -43,9 +43,11 @@ exports.generate_tiny_url = (req, res) => {
           return websiteModel.getDocument({original: postURL})
             .then((website) => {
               console.log('xxx', website);
-              res.render('index', {
-                'result': [{original: postURL, tiny: res.headers.host + '/' + website.tiny}]
-              });
+              const websiteJson = {original: website.original, tiny: req.headers.host + '/' + website.tiny};
+              res.json(websiteJson);
+              // res.render('index', {
+              //   'result': [{original: postURL, tiny: res.headers.host + '/' + website.tiny}]
+              // });
             })
             .catch((err) => res.status(500).json({error: err}));
         }
