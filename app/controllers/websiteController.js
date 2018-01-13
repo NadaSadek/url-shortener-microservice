@@ -19,7 +19,7 @@ exports.generate_tiny_url = (req, res) => {
 
   const RandomId = Math.floor(Math.random() * (9000 - 1) + 1);
   const postURL = req.body.url;
-  console.log(postURL);
+  console.log('hostname ', req.headers.host);
   if(urlValidator(postURL)){
     const websiteDocument = new websiteModel({
       original: postURL,
@@ -28,8 +28,8 @@ exports.generate_tiny_url = (req, res) => {
     console.log('websiteDocument ', websiteDocument);
   	return websiteDocument.save()
       .then(() => {
-        console.log(res.headers);
-        const websiteJson = {original: websiteDocument.original, tiny: res.headers.host+'/'+websiteDocument.tiny};
+        console.log('yyy: ',res.connection.socket.headers.origin);
+        const websiteJson = {original: websiteDocument.original, tiny: req.headers.host + '/' + websiteDocument.tiny};
         console.log('Saved!', websiteDocument);
         console.log('websiteJson', websiteJson);
         res.status(200).json(websiteJson);
@@ -39,11 +39,12 @@ exports.generate_tiny_url = (req, res) => {
       })
       .catch(err => {
         if(err.code === 11000) {
+          console.log('err code', err.code);
           return websiteModel.getDocument({original: postURL})
             .then((website) => {
               console.log('xxx', website);
               res.render('index', {
-                'result': [{original: postURL, tiny: res.headers.host+'/'+website.tiny}]
+                'result': [{original: postURL, tiny: res.headers.host + '/' + website.tiny}]
               });
             })
             .catch((err) => res.status(500).json({error: err}));

@@ -10,10 +10,7 @@ const
 		bodyParser = require('body-parser');
 
 // Connect to Mongoose
-mongoose.connect(config.db, err => {
-	console.error('Mongoose error', err);
-	process.exit(1);
-});
+mongoose.connect(config.db);
 
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
