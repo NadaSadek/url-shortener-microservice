@@ -19,7 +19,6 @@ exports.generate_tiny_url = (req, res) => {
 
   const RandomId = Math.floor(Math.random() * (9000 - 1) + 1);
   const postURL = req.body.url;
-  console.log('hostname ', req.headers.host);
   if(urlValidator(postURL)){
     const websiteDocument = new websiteModel({
       original: postURL,
@@ -28,7 +27,7 @@ exports.generate_tiny_url = (req, res) => {
     console.log('websiteDocument ', websiteDocument);
   	return websiteDocument.save()
       .then(() => {
-        console.log('mongoose -> successfully saved')
+        console.log('mongoose -> successfully saved');
         const websiteJson = {original: websiteDocument.original, tiny: req.headers.host + '/' + websiteDocument.tiny};
         console.log('Saved!', websiteDocument);
         console.log('websiteJson', websiteJson);
@@ -65,6 +64,7 @@ exports.get_original_url = (req, res) => {
   try {
   return websiteModel.getDocument({tiny: req.params.tiny})
     .then((website) => {
+      console.log('get_orignial_url ', website);
       res.redirect(website.original);
     })
     .catch((err) => res.status(500).json({error: err}));

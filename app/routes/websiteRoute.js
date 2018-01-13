@@ -12,7 +12,7 @@ const
 router.get('/', websiteController.open_homepage);
 
 
-router.post('/*', websiteController.generate_tiny_url);
+router.post('/create', websiteController.generate_tiny_url);
 
 
 router.get('/:tiny', websiteController.get_original_url);
