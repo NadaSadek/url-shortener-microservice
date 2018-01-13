@@ -1,17 +1,13 @@
 extends ../node_modules/pug-bootstrap/_bootstrap
 block body
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Coda')
-  link(href='/../stylesheets/style.css', rel='stylesheet')
-  if result
-    h1.result {originalUrl: #{result.original}, tinyUrl: #{result.original}} or click <a href= '/create/' target='_blank'> here </a>
-  else if errMessage
-    h1.error-message #{errMessage}
-  else 
-    h1.main-title Make me Shorter!
+  link(href='/../stylesheets/style.css', rel='stylesheet') 
+  h1.main-title Make me Shorter!
+  h3 e.g. http://www.example.com
   form(action="/create", method="post")
     div.form-group
       div.input
         span.label Please Enter a Url
-        input(type="text", class="url-input",name="url")
+        input(type="text", class="url-input", name="url")
         div.create-button
-        input(type="submit", class="btn-primary",value="create")    
+        input(type="submit", class="btn-primary", value="create")    

@@ -24,17 +24,12 @@ exports.generate_tiny_url = (req, res) => {
       original: postURL,
       tiny: RandomId
     });
-    console.log('websiteDocument ', websiteDocument);
   	return websiteDocument.save()
       .then(() => {
         console.log('mongoose -> successfully saved');
         const websiteJson = {original: websiteDocument.original, tiny: req.headers.host + '/' + websiteDocument.tiny};
         console.log('Saved!', websiteDocument);
-        console.log('websiteJson', websiteJson);
         res.json(websiteJson);
-        // res.render('index', {
-        //   'result': [websiteJson]
-        // });
       })
       .catch(err => {
         if(err.code === 11000) {
@@ -44,9 +39,6 @@ exports.generate_tiny_url = (req, res) => {
               console.log('xxx', website);
               const websiteJson = {original: website.original, tiny: req.headers.host + '/' + website.tiny};
               res.json(websiteJson);
-              // res.render('index', {
-              //   'result': [{original: postURL, tiny: res.headers.host + '/' + website.tiny}]
-              // });
             })
             .catch((err) => res.status(500).json({error: err}));
         }
@@ -54,9 +46,7 @@ exports.generate_tiny_url = (req, res) => {
       });
   }
   else {
-    res.render('index', {
-      'errMessage': 'Please Provide a Valid URL!'
-    });
+    res.status(500).json({error: 'invalid url. Follow this format e.g. http://www.example.com'});
   }
 };
 
